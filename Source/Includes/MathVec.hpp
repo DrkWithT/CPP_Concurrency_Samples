@@ -2,7 +2,6 @@
 #define MATH_VEC_HPP
 
 #include <concepts>
-#include <utility>
 #include <memory>
 #include <algorithm>
 #include <initializer_list>
@@ -10,12 +9,7 @@
 #include "Meta/Helpers.hpp"
 
 namespace SampleLib {
-    template <int Fallback>
-    constexpr int passCheckedValue(int value) {
-        return (value >= Fallback)
-            ? value
-            : Fallback;
-    }
+    using Meta::passCheckedValue;
 
     template <typename T> requires (std::floating_point<Meta::naked_t<T>>)
     class VecN {
