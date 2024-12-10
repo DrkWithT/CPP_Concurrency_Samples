@@ -11,3 +11,7 @@ target_sources(ProduceConsume PRIVATE ProduceConsume.cpp)
 add_executable(MatrixVectorMult)
 target_include_directories(MatrixVectorMult PUBLIC "${MY_INCLUDES}")
 target_sources(MatrixVectorMult PRIVATE MatrixVectorMult.cpp)
+
+add_executable(ThreadPool)
+target_include_directories(ThreadPool PUBLIC "${MY_INCLUDES}")
+target_sources(ThreadPool PRIVATE ThreadPool.cpp)
