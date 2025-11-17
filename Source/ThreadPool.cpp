@@ -25,7 +25,7 @@
 constexpr std::size_t min_delay = 1;
 constexpr std::size_t max_delay = 3;
 constexpr std::size_t min_item = 1;
-constexpr std::size_t max_item = 10;
+constexpr std::size_t max_item = 3;
 
 struct NumTask {
     std::size_t item;
@@ -65,7 +65,7 @@ public:
 
                 m_task_cv.notify_one();
 
-                std::this_thread::sleep_for(std::chrono::seconds {2});
+                std::this_thread::sleep_for(std::chrono::seconds {1});
             }
 
             {
@@ -74,10 +74,10 @@ public:
 
             for (std::size_t worker_count = 0; worker_count < default_workers_n; worker_count++) {
                 m_tasks.push(NumTask {0, true});
+                m_task_cv.notify_one();
+                std::this_thread::sleep_for(std::chrono::milliseconds {100});
             }
             }
-
-            m_task_cv.notify_all();
 
             std::cout << "Producer stopped.\n";
         };
@@ -101,7 +101,7 @@ public:
                 m_tasks.pop();
                 }
 
-                if (temp.poison || temp.item == 0) {
+                if (temp.poison) {
                     break;
                 }
 
@@ -140,7 +140,7 @@ public:
         std::cout << "Stopping pool...\n";
 
         m_stop_flag.test_and_set();
-        m_stop_flag.notify_one();
+        m_stop_flag.notify_all();
 
         for (auto& thrd : m_threads) {
             thrd.join();
