@@ -15,3 +15,7 @@ target_sources(MatrixVectorMult PRIVATE MatrixVectorMult.cpp)
 add_executable(ThreadPool)
 target_include_directories(ThreadPool PUBLIC "${MY_INCLUDES}")
 target_sources(ThreadPool PRIVATE ThreadPool.cpp)
+
+add_executable(PingPong)
+target_include_directories(PingPong PUBLIC ${MY_INCLUDES})
+target_sources(PingPong PRIVATE PingPong.cpp)
